@@ -1,111 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Study Planner</title>
+    <title>AuraPlan - Plan Smarter, Study Better</title>
     <link rel="stylesheet" href="styles/landing.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 </head>
+
 <body>
-    <div class="container">
-        <header class="hero-section animate__animated animate__fadeInDown">
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
             <nav class="navbar">
-                <div class="logo">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>AuraPlan</span>
-                </div>
-                <ul class="nav-links">
+                <a href="#" class="logo">AuraPlan</a>
+                <ul class="nav-menu">
+                    <li><a href="#home">Home</a></li>
                     <li><a href="#features">Features</a></li>
-                    <li><a href="#about">About</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
+                <a href="login.html" class="cta-button">Get Started</a>
                 <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
                 </div>
             </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
             <div class="hero-content">
-                <i class="fas fa-graduation-cap hero-icon animate__animated animate__bounceIn animate__delay-1s"></i>
-                <h1 class="hero-title animate__animated animate__fadeInUp animate__delay-1s">Smart Study Planner</h1>
-                <p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-2s">
-                    Organize your studies, track your progress, and achieve your academic goals with our intelligent planning system.
-                </p>
-                <div class="features-preview animate__animated animate__fadeInUp animate__delay-3s">
-                    <div class="feature-preview">
-                        <i class="fas fa-tasks"></i>
-                        <span>Task Management</span>
-                    </div>
-                    <div class="feature-preview">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Progress Tracking</span>
-                    </div>
-                    <div class="feature-preview">
-                        <i class="fas fa-cloud"></i>
-                        <span>Cloud Sync</span>
-                    </div>
+                <div class="hero-text" data-aos="fade-right">
+                    <h1>Plan Smarter, Study Better in Just 3 Months!</h1>
+                    <p>Organize your study schedules, track your progress, and stay consistent with our intelligent
+                        planner. Achieve your academic goals faster than ever.</p>
+                    <a href="login.html" class="cta-button">Start Planning</a>
                 </div>
-                <button class="cta-button animate__animated animate__pulse animate__infinite animate__delay-4s" onclick="window.location.href='login.html'">
-                    <i class="fas fa-rocket"></i>
-                    Get Started
-                </button>
+                <div class="hero-image" data-aos="fade-left">
+                    <img src="Qcc.jpeg" alt="Students studying">
+                </div>
             </div>
-        </header>
+        </div>
+    </section>
 
-        <section id="features" class="features-section">
-            <h2 class="section-title">Features</h2>
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Features Designed for Success</h2>
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
                     <i class="fas fa-calendar-alt"></i>
-                    <h3>Smart Scheduling</h3>
-                    <p>Our AI-powered scheduler helps you create a balanced study plan that adapts to your needs.</p>
+                    <h3>Smart Timetable Creation</h3>
+                    <p>Create a balanced and effective study schedule in minutes with our AI-powered timetable
+                        generator.</p>
                 </div>
-                <div class="feature-card">
-                    <i class="fas fa-bullseye"></i>
-                    <h3>Goal Setting</h3>
-                    <p>Set weekly and monthly goals to stay motivated and focused on what matters most.</p>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Progress Tracking</h3>
+                    <p>Visualize your progress with insightful analytics and stay motivated to reach your goals.</p>
                 </div>
-                <div class="feature-card">
-                    <i class="fas fa-sync-alt"></i>
-                    <h3>Cross-Platform Sync</h3>
-                    <p>Access your study plan from any device, anytime, anywhere. Your data is always in sync.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="about-section">
-            <h2 class="section-title">About AuraPlan</h2>
-            <div class="about-content">
-                <div class="about-image">
-                    <img src="https://placehold.co/400x400" alt="About AuraPlan">
-                </div>
-                <div class="about-text">
-                    <p>
-                        AuraPlan was born from a simple idea: to make learning more effective and less stressful. Our team of educators and developers has created a tool that helps students like you take control of their education.
-                    </p>
-                    <p>
-                        We believe that with the right tools, anyone can achieve their academic dreams. Join us on this journey to smarter studying.
-                    </p>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-bell"></i>
+                    <h3>Reminders & Notifications</h3>
+                    <p>Never miss a study session with customizable reminders and notifications.</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="contact" class="contact-section">
-            <h2 class="section-title">Get in Touch</h2>
-            <p>Have questions or feedback? We'd love to hear from you.</p>
-            <form class="contact-form">
-                <input type="email" placeholder="Your Email">
-                <textarea placeholder="Your Message"></textarea>
-                <button type="submit">Send Message</button>
-            </form>
-        </section>
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Student Testimonials</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://i.pravatar.cc/150?img=1" alt="Student Avatar">
+                    <p>"AuraPlan has been a game-changer for my studies. I feel so much more organized and in control."
+                    </p>
+                    <h4>- Sarah J.</h4>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://i.pravatar.cc/150?img=2" alt="Student Avatar">
+                    <p>"The progress tracking feature is amazing! It keeps me motivated to see how far I've come."</p>
+                    <h4>- Michael B.</h4>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://i.pravatar.cc/150?img=3" alt="Student Avatar">
+                    <p>"I love the reminders. They help me stay on track even on my busiest days."</p>
+                    <h4>- Emily L.</h4>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <footer class="footer">
-            <p>&copy; 2025 AuraPlan. All rights reserved.</p>
-        </footer>
-    </div>
+    <!-- Free Resources Section -->
+    <section id="resources" class="resources-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Free Study Resources for You</h2>
+            <p class="section-subtitle" data-aos="fade-up">Explore free guides, videos, and templates to boost your
+                productivity.</p>
+            <div class="resources-layout">
+                <div class="resources-image" data-aos="fade-left" data-aos-delay="400">
+                    <img src="resources.jpg" alt="Resources Illustration">
+                </div>
+                <div class="resources-content">
+                    <div class="resources-grid">
+                        <div class="resource-card" data-aos="fade-up" data-aos-delay="100">
+                            <i class="fas fa-file-pdf"></i>
+                            <h3>Free Study Guide</h3>
+                            <p>Download our comprehensive guide to effective study techniques.</p>
+                            <a href="#" class="resource-link">Download Now</a>
+                        </div>
+                        <div class="resource-card" data-aos="fade-up" data-aos-delay="200">
+                            <i class="fab fa-youtube"></i>
+                            <h3>Motivational Study Videos</h3>
+                            <p>Watch our curated playlist of study music and motivational videos.</p>
+                            <a href="https://www.youtube.com/watch?v=5qap5aO4i9A" target="_blank"
+                                class="resource-link">Watch Now</a>
+                        </div>
+                        <div class="resource-card" data-aos="fade-up" data-aos-delay="300">
+                            <i class="fas fa-palette"></i>
+                            <h3>Printable Planner Templates</h3>
+                            <p>Get access to our collection of free printable planner templates.</p>
+                            <a href="#" class="resource-link">Get Templates</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Choose Your Plan</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card" data-aos="fade-up" data-aos-delay="100">
+                    <h3>Free</h3>
+                    <p class="price">$0<span>/month</span></p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Smart Timetable Creation</li>
+                        <li><i class="fas fa-check"></i> Basic Progress Tracking</li>
+                        <li><i class="fas fa-times"></i> Reminders & Notifications</li>
+                    </ul>
+                    <a href="#" class="cta-button">Subscribe Now</a>
+                </div>
+                <div class="pricing-card pro" data-aos="fade-up" data-aos-delay="200">
+                    <h3>Pro</h3>
+                    <p class="price">$9<span>/month</span></p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Smart Timetable Creation</li>
+                        <li><i class="fas fa-check"></i> Advanced Progress Tracking</li>
+                        <li><i class="fas fa-check"></i> Reminders & Notifications</li>
+                    </ul>
+                    <a href="#" class="cta-button">Subscribe Now</a>
+                </div>
+                <div class="pricing-card" data-aos="fade-up" data-aos-delay="300">
+                    <h3>Premium</h3>
+                    <p class="price">$19<span>/month</span></p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> All Pro Features</li>
+                        <li><i class="fas fa-check"></i> Personalized Coaching</li>
+                        <li><i class="fas fa-check"></i> Priority Support</li>
+                    </ul>
+                    <a href="#" class="cta-button">Subscribe Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3>AuraPlan</h3>
+                    <p>Plan Smarter, Study Better.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>contact@auraplan.com</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AuraPlan. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="js/landing.js"></script>
 </body>
+
 </html>

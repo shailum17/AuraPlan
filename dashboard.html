@@ -10,98 +10,96 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Header -->
-        <header class="dashboard-header">
-            <div class="header-content">
-                <div class="logo-section">
-                    <i class="fas fa-graduation-cap"></i>
-                    <h1>Smart Study Planner</h1>
-                </div>
-                <div class="user-section">
-                    <span class="user-info">
-                        <i class="fas fa-user"></i>
-                        <span id="user-email">Loading...</span>
-                    </span>
-                    <button class="logout-btn" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Logout
-                    </button>
-                </div>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>AuraPlan</h2>
             </div>
-        </header>
+            <ul class="sidebar-nav">
+                <li class="active"><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </aside>
 
         <!-- Main Content -->
-        <main class="dashboard-main">
+        <main class="main-content">
+            <header class="main-header">
+                <div class="user-info">
+                    Welcome, <span id="user-email">Loading...</span>
+                </div>
+            </header>
+
             <!-- Stats Section -->
-            <section class="stats-section" data-aos="fade-up">
-                <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+            <section class="stats-section">
+                <div class="stat-card">
                     <div class="stat-icon total">
                         <i class="fas fa-tasks"></i>
                     </div>
                     <div class="stat-info">
-                        <h3 id="total-tasks">0</h3>
                         <p>Total Tasks</p>
+                        <h3 id="total-tasks">0</h3>
                     </div>
                 </div>
-                <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-card">
                     <div class="stat-icon completed">
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="stat-info">
-                        <h3 id="completed-tasks">0</h3>
                         <p>Completed</p>
+                        <h3 id="completed-tasks">0</h3>
                     </div>
                 </div>
-                <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-card">
                     <div class="stat-icon pending">
                         <i class="fas fa-clock"></i>
                     </div>
                     <div class="stat-info">
-                        <h3 id="pending-tasks">0</h3>
                         <p>Pending</p>
+                        <h3 id="pending-tasks">0</h3>
                     </div>
                 </div>
             </section>
 
             <!-- Task Management Section -->
-            <section class="task-section" data-aos="fade-up" data-aos-delay="400">
+            <section class="task-section">
                 <div class="task-header">
                     <h2>My Tasks</h2>
-                    <button class="add-task-btn" onclick="openTaskModal()">
-                        <i class="fas fa-plus"></i>
-                        Add Task
-                    </button>
-                </div>
-
-                <!-- Task Controls -->
-                <div class="task-controls" data-aos="fade-up" data-aos-delay="500">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="search-input" placeholder="Search tasks..." oninput="filterTasks()">
-                    </div>
-                    <div class="filter-buttons">
-                        <button class="filter-btn active" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="pending">Pending</button>
-                        <button class="filter-btn" data-filter="completed">Completed</button>
+                    <div class="task-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-input" placeholder="Search tasks..." oninput="filterTasks()">
+                        </div>
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="pending">Pending</button>
+                            <button class="filter-btn" data-filter="completed">Completed</button>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Task List -->
-                <div class="task-list" id="task-list" data-aos="fade-up" data-aos-delay="600">
-                    <div class="empty-state">
-                        <i class="fas fa-clipboard-list"></i>
-                        <h3>No tasks yet</h3>
-                        <p>Create your first task to get started!</p>
-                    </div>
+                <div class="task-list" id="task-list">
+                    <!-- Tasks will be rendered here by JavaScript -->
                 </div>
             </section>
+
+            <!-- Floating Action Button -->
+            <button class="fab" onclick="openTaskModal()">
+                <i class="fas fa-plus"></i>
+            </button>
         </main>
     </div>
 
     <!-- Task Modal -->
     <div id="task-modal" class="modal">
-        <div class="modal-content animate__animated">
+        <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modal-title">Add New Task</h3>
                 <button class="close-btn" onclick="closeTaskModal()">
