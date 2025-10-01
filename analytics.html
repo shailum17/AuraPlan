@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - Smart Study Planner</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/analytics.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>AuraPlan</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                <li><a href="goals.html"><i class="fas fa-bullseye"></i> Goals</a></li>
+                <li class="active"><a href="analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="analytics-header">
+                    <h1>Study Analytics</h1>
+                    <div class="analytics-controls">
+                        <select id="time-range">
+                            <option value="7">Last 7 days</option>
+                            <option value="30" selected>Last 30 days</option>
+                            <option value="90">Last 3 months</option>
+                            <option value="365">Last year</option>
+                        </select>
+                        <button class="export-btn" onclick="exportAnalytics()">
+                            <i class="fas fa-download"></i>
+                            Export Data
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Key Metrics -->
+            <section class="metrics-section">
+                <div class="metric-card">
+                    <div class="metric-icon productivity">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3 id="productivity-score">0%</h3>
+                        <p>Productivity Score</p>
+                        <span class="metric-trend" id="productivity-trend"></span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon completion">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3 id="completion-rate">0%</h3>
+                        <p>Completion Rate</p>
+                        <span class="metric-trend" id="completion-trend"></span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon streak">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3 id="current-streak">0</h3>
+                        <p>Day Streak</p>
+                        <span class="metric-trend" id="streak-trend"></span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon focus">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3 id="avg-focus-time">0h</h3>
+                        <p>Avg. Focus Time</p>
+                        <span class="metric-trend" id="focus-trend"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-section">
+                <!-- Progress Over Time -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>Progress Over Time</h3>
+                        <div class="chart-tabs">
+                            <button class="chart-tab active" data-chart="progress" data-type="line">Tasks</button>
+                            <button class="chart-tab" data-chart="progress" data-type="bar">Goals</button>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="progressChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Task Distribution -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>Task Distribution</h3>
+                        <div class="chart-tabs">
+                            <button class="chart-tab active" data-chart="distribution" data-type="priority">Priority</button>
+                            <button class="chart-tab" data-chart="distribution" data-type="category">Category</button>
+                            <button class="chart-tab" data-chart="distribution" data-type="status">Status</button>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="distributionChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Weekly Heatmap -->
+                <div class="chart-container full-width">
+                    <div class="chart-header">
+                        <h3>Activity Heatmap</h3>
+                        <div class="heatmap-legend">
+                            <span>Less</span>
+                            <div class="legend-scale">
+                                <div class="legend-cell" data-level="0"></div>
+                                <div class="legend-cell" data-level="1"></div>
+                                <div class="legend-cell" data-level="2"></div>
+                                <div class="legend-cell" data-level="3"></div>
+                                <div class="legend-cell" data-level="4"></div>
+                            </div>
+                            <span>More</span>
+                        </div>
+                    </div>
+                    <div class="heatmap-container" id="heatmap-container">
+                        <!-- Heatmap will be generated here -->
+                    </div>
+                </div>
+
+                <!-- Performance Trends -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>Performance Trends</h3>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Study Habits -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>Study Habits</h3>
+                    </div>
+                    <div class="habits-grid">
+                        <div class="habit-item">
+                            <div class="habit-icon">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <div class="habit-content">
+                                <h4>Peak Hours</h4>
+                                <p id="peak-hours">9:00 AM - 11:00 AM</p>
+                            </div>
+                        </div>
+                        <div class="habit-item">
+                            <div class="habit-icon">
+                                <i class="fas fa-calendar-day"></i>
+                            </div>
+                            <div class="habit-content">
+                                <h4>Most Productive Day</h4>
+                                <p id="productive-day">Tuesday</p>
+                            </div>
+                        </div>
+                        <div class="habit-item">
+                            <div class="habit-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="habit-content">
+                                <h4>Best Category</h4>
+                                <p id="best-category">Mathematics</p>
+                            </div>
+                        </div>
+                        <div class="habit-item">
+                            <div class="habit-icon">
+                                <i class="fas fa-target"></i>
+                            </div>
+                            <div class="habit-content">
+                                <h4>Goal Success Rate</h4>
+                                <p id="goal-success-rate">85%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Insights Section -->
+            <section class="insights-section">
+                <div class="insights-header">
+                    <h3>AI-Powered Insights</h3>
+                    <button class="refresh-insights-btn" onclick="generateInsights()">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh Insights
+                    </button>
+                </div>
+                <div class="insights-grid" id="insights-grid">
+                    <!-- Insights will be generated here -->
+                </div>
+            </section>
+
+            <!-- Achievements Section -->
+            <section class="achievements-section">
+                <div class="achievements-header">
+                    <h3>Achievements & Milestones</h3>
+                </div>
+                <div class="achievements-grid" id="achievements-grid">
+                    <!-- Achievements will be generated here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Analyzing your data...</p>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/local-storage.js"></script>
+    <script src="js/analytics.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('Service Worker registered:', registration.scope);
+                })
+                .catch(error => {
+                    console.log('Service Worker registration failed:', error);
+                });
+        }
+    </script>
+</body>
+</html>

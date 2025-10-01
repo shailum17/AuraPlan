@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar - Smart Study Planner</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/calendar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>AuraPlan</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li class="active"><a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                <li><a href="goals.html"><i class="fas fa-bullseye"></i> Goals</a></li>
+                <li><a href="analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="calendar-header">
+                    <h1>Study Calendar</h1>
+                    <div class="calendar-controls">
+                        <div class="view-switcher">
+                            <button class="view-btn active" data-view="month">Month</button>
+                            <button class="view-btn" data-view="week">Week</button>
+                            <button class="view-btn" data-view="timeline">Timeline</button>
+                        </div>
+                        <div class="calendar-nav">
+                            <button class="nav-btn" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                            <button class="nav-btn today-btn">Today</button>
+                            <button class="nav-btn" id="next-btn"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div class="current-date" id="current-date"></div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Calendar Views -->
+            <section class="calendar-section">
+                <!-- Month View -->
+                <div class="calendar-view month-view active" id="month-view">
+                    <div class="calendar-grid" id="calendar-grid">
+                        <!-- Calendar will be generated here -->
+                    </div>
+                </div>
+
+                <!-- Week View -->
+                <div class="calendar-view week-view" id="week-view">
+                    <div class="week-header">
+                        <div class="time-column"></div>
+                        <div class="days-header" id="week-days-header">
+                            <!-- Week days will be generated here -->
+                        </div>
+                    </div>
+                    <div class="week-grid" id="week-grid">
+                        <!-- Week grid will be generated here -->
+                    </div>
+                </div>
+
+                <!-- Timeline View -->
+                <div class="calendar-view timeline-view" id="timeline-view">
+                    <div class="timeline-container">
+                        <div class="timeline-header">
+                            <h3>Study Timeline</h3>
+                            <div class="timeline-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color high"></span>
+                                    <span>High Priority</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color medium"></span>
+                                    <span>Medium Priority</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color low"></span>
+                                    <span>Low Priority</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-content" id="timeline-content">
+                            <!-- Timeline items will be generated here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Add Task -->
+            <div class="quick-add-container">
+                <div class="quick-add-form">
+                    <input type="text" id="quick-task-title" placeholder="Quick add a task...">
+                    <input type="date" id="quick-task-date">
+                    <input type="time" id="quick-task-time">
+                    <button class="quick-add-btn" onclick="quickAddTask()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Floating Action Button -->
+            <button class="fab" onclick="openTaskModal()">
+                <i class="fas fa-plus"></i>
+            </button>
+        </main>
+    </div>
+
+    <!-- Task Detail Modal -->
+    <div id="task-detail-modal" class="modal">
+        <div class="modal-content task-detail-content">
+            <div class="modal-header">
+                <h3 id="task-detail-title">Task Details</h3>
+                <button class="close-btn" onclick="closeTaskDetailModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="task-detail-body" id="task-detail-body">
+                <!-- Task details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Modal -->
+    <div id="task-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Add New Task</h3>
+                <button class="close-btn" onclick="closeTaskModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="task-form">
+                <div class="form-group">
+                    <label for="task-title">Task Title</label>
+                    <input type="text" id="task-title" placeholder="Enter task title" required>
+                </div>
+                <div class="form-group">
+                    <label for="task-description">Description</label>
+                    <textarea id="task-description" placeholder="Enter task description" rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="task-priority">Priority</label>
+                        <select id="task-priority">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-category">Category</label>
+                        <select id="task-category">
+                            <option value="study">Study</option>
+                            <option value="assignment">Assignment</option>
+                            <option value="exam">Exam</option>
+                            <option value="project">Project</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="task-due-date">Due Date</label>
+                        <input type="date" id="task-due-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="task-due-time">Due Time</label>
+                        <input type="time" id="task-due-time">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="task-reminder">Reminder</label>
+                    <select id="task-reminder">
+                        <option value="none">No Reminder</option>
+                        <option value="5">5 minutes before</option>
+                        <option value="15">15 minutes before</option>
+                        <option value="30">30 minutes before</option>
+                        <option value="60">1 hour before</option>
+                        <option value="1440">1 day before</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="cancel-btn" onclick="closeTaskModal()">Cancel</button>
+                    <button type="submit" class="save-btn">
+                        <i class="fas fa-save"></i>
+                        Save Task
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Loading calendar...</p>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/local-storage.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/calendar.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('Service Worker registered:', registration.scope);
+                })
+                .catch(error => {
+                    console.log('Service Worker registration failed:', error);
+                });
+        }
+    </script>
+</body>
+</html>

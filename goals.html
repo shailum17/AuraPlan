@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goals - Smart Study Planner</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/goals.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>AuraPlan</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                <li class="active"><a href="goals.html"><i class="fas fa-bullseye"></i> Goals</a></li>
+                <li><a href="analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="goals-header">
+                    <h1>Study Goals</h1>
+                    <button class="add-goal-btn" onclick="openGoalModal()">
+                        <i class="fas fa-plus"></i>
+                        Add New Goal
+                    </button>
+                </div>
+            </header>
+
+            <!-- Goals Overview -->
+            <section class="goals-overview">
+                <div class="overview-card">
+                    <div class="overview-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="overview-content">
+                        <h3 id="total-goals">0</h3>
+                        <p>Total Goals</p>
+                    </div>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-icon completed">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="overview-content">
+                        <h3 id="completed-goals">0</h3>
+                        <p>Completed</p>
+                    </div>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-icon in-progress">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="overview-content">
+                        <h3 id="active-goals">0</h3>
+                        <p>In Progress</p>
+                    </div>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-icon overdue">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="overview-content">
+                        <h3 id="overdue-goals">0</h3>
+                        <p>Overdue</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Goals Filter -->
+            <section class="goals-filter">
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">All Goals</button>
+                    <button class="filter-tab" data-filter="active">Active</button>
+                    <button class="filter-tab" data-filter="completed">Completed</button>
+                    <button class="filter-tab" data-filter="overdue">Overdue</button>
+                </div>
+                <div class="search-sort">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="goals-search" placeholder="Search goals...">
+                    </div>
+                    <select id="goals-sort">
+                        <option value="deadline">Sort by Deadline</option>
+                        <option value="priority">Sort by Priority</option>
+                        <option value="progress">Sort by Progress</option>
+                        <option value="created">Sort by Created Date</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Goals List -->
+            <section class="goals-section">
+                <div class="goals-grid" id="goals-grid">
+                    <!-- Goals will be rendered here -->
+                </div>
+            </section>
+
+            <!-- Floating Action Button -->
+            <button class="fab" onclick="openGoalModal()">
+                <i class="fas fa-plus"></i>
+            </button>
+        </main>
+    </div>
+
+    <!-- Goal Modal -->
+    <div id="goal-modal" class="modal">
+        <div class="modal-content goal-modal-content">
+            <div class="modal-header">
+                <h3 id="goal-modal-title">Add New Goal</h3>
+                <button class="close-btn" onclick="closeGoalModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="goal-form">
+                <div class="form-group">
+                    <label for="goal-title">Goal Title</label>
+                    <input type="text" id="goal-title" placeholder="Enter goal title" required>
+                </div>
+                <div class="form-group">
+                    <label for="goal-description">Description</label>
+                    <textarea id="goal-description" placeholder="Describe your goal..." rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="goal-category">Category</label>
+                        <select id="goal-category">
+                            <option value="academic">Academic</option>
+                            <option value="skill">Skill Development</option>
+                            <option value="career">Career</option>
+                            <option value="personal">Personal</option>
+                            <option value="health">Health & Wellness</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="goal-priority">Priority</label>
+                        <select id="goal-priority">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="goal-start-date">Start Date</label>
+                        <input type="date" id="goal-start-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="goal-target-date">Target Date</label>
+                        <input type="date" id="goal-target-date">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="goal-target-value">Target Value</label>
+                    <div class="target-input-group">
+                        <input type="number" id="goal-target-value" placeholder="100" min="1">
+                        <select id="goal-unit">
+                            <option value="hours">Hours</option>
+                            <option value="days">Days</option>
+                            <option value="tasks">Tasks</option>
+                            <option value="chapters">Chapters</option>
+                            <option value="pages">Pages</option>
+                            <option value="points">Points</option>
+                            <option value="percent">Percent</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Milestones</label>
+                    <div class="milestones-container" id="milestones-container">
+                        <div class="milestone-input">
+                            <input type="text" placeholder="Milestone 1" class="milestone-title">
+                            <input type="date" class="milestone-date">
+                            <button type="button" class="remove-milestone-btn" onclick="removeMilestone(this)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" class="add-milestone-btn" onclick="addMilestone()">
+                        <i class="fas fa-plus"></i>
+                        Add Milestone
+                    </button>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="cancel-btn" onclick="closeGoalModal()">Cancel</button>
+                    <button type="submit" class="save-btn">
+                        <i class="fas fa-save"></i>
+                        Save Goal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Goal Detail Modal -->
+    <div id="goal-detail-modal" class="modal">
+        <div class="modal-content goal-detail-content">
+            <div class="modal-header">
+                <h3 id="goal-detail-title">Goal Details</h3>
+                <button class="close-btn" onclick="closeGoalDetailModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="goal-detail-body" id="goal-detail-body">
+                <!-- Goal details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Update Modal -->
+    <div id="progress-modal" class="modal">
+        <div class="modal-content progress-modal-content">
+            <div class="modal-header">
+                <h3>Update Progress</h3>
+                <button class="close-btn" onclick="closeProgressModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="progress-form">
+                <div class="form-group">
+                    <label for="progress-value">Current Progress</label>
+                    <div class="progress-input-group">
+                        <input type="number" id="progress-value" min="0">
+                        <span id="progress-unit">/ 100 hours</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="progress-notes">Notes (Optional)</label>
+                    <textarea id="progress-notes" placeholder="Add notes about your progress..." rows="3"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="cancel-btn" onclick="closeProgressModal()">Cancel</button>
+                    <button type="button" class="save-btn" onclick="updateProgress()">
+                        <i class="fas fa-save"></i>
+                        Update Progress
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Loading goals...</p>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/local-storage.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/goals.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('Service Worker registered:', registration.scope);
+                })
+                .catch(error => {
+                    console.log('Service Worker registration failed:', error);
+                });
+        }
+    </script>
+</body>
+</html>

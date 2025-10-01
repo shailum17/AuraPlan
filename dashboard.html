@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Smart Study Planner</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AuraPlan</title>
     <link rel="stylesheet" href="styles/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 </head>
@@ -19,6 +23,9 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="active"><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                <li><a href="goals.html"><i class="fas fa-bullseye"></i> Goals</a></li>
+                <li><a href="analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>
                 <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
                 <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
             </ul>
@@ -150,6 +157,39 @@
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="js/firebase-config.js"></script>
+    <script src="js/local-storage.js"></script>
+    <script src="js/notifications.js"></script>
     <script src="js/dashboard.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registered successfully:', registration.scope);
+                        
+                        // Enable background sync
+                        if ('sync' in window.ServiceWorkerRegistration.prototype) {
+                            console.log('Background Sync supported');
+                        }
+                        
+                        // Enable periodic sync for reminders
+                        if ('periodicSync' in window.ServiceWorkerRegistration.prototype) {
+                            registration.periodicSync.register('daily-reminder', {
+                                minInterval: 24 * 60 * 60 * 1000 // 24 hours
+                            }).then(() => {
+                                console.log('Periodic sync registered');
+                            }).catch(err => {
+                                console.log('Periodic sync registration failed:', err);
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>
