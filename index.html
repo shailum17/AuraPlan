@@ -3,219 +3,813 @@
 
 <head>
     <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AuraPlan - Smart Study Planner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraPlan - Transform Your Study Journey</title>
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/components.css">
     <link rel="stylesheet" href="styles/landing.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/navigation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4CAF50">
+    <meta name="theme-color" content="#6366F1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 </head>
 
 <body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Header -->
+    <!-- Floating Navigation -->
     <header class="header">
         <div class="container">
             <nav class="navbar">
-                <a href="#" class="logo">AuraPlan</a>
-                <ul class="nav-menu">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#resources">Resources</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-                <a href="login.html" class="cta-button">Get Started</a>
-                <div class="hamburger">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <span class="logo-text">AuraPlan</span>
                 </div>
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#features" class="nav-link">Features</a></li>
+                    <li><a href="#how-it-works" class="nav-link">How it Works</a></li>
+                    <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+                    <li><a href="#pricing" class="nav-link">Pricing</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="login.html" class="btn-ghost">Sign In</a>
+                    <a href="login.html" class="btn-primary">Start Free Trial</a>
+                </div>
+                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </nav>
         </div>
     </header>
 
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay">
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-header">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <span class="logo-text">AuraPlan</span>
+                </div>
+                <button class="mobile-menu-close" aria-label="Close mobile menu">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="mobile-nav">
+                <a href="#home" class="mobile-nav-link">Home</a>
+                <a href="#features" class="mobile-nav-link">Features</a>
+                <a href="#how-it-works" class="mobile-nav-link">How it Works</a>
+                <a href="#testimonials" class="mobile-nav-link">Reviews</a>
+                <a href="#pricing" class="mobile-nav-link">Pricing</a>
+            </nav>
+            <div class="mobile-nav-actions">
+                <a href="login.html" class="btn-ghost w-full">Sign In</a>
+                <a href="login.html" class="btn-primary w-full">Start Free Trial</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Hero Section -->
-    <section id="home" class="hero-section">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text" data-aos="fade-right">
-                    <h1>Plan Smarter, Study Better in Just 3 Months!</h1>
-                    <p>Organize your study schedules, track your progress, and stay consistent with our intelligent
-                        planner. Achieve your academic goals faster than ever.</p>
-                    <a href="login.html" class="cta-button">Start Planning</a>
-                </div>
-                <div class="hero-image" data-aos="fade-left">
-                    <img src="Qcc.jpeg" alt="Students studying">
-                </div>
+    <main id="main-content">
+        <section id="home" class="hero-section">
+            <div class="hero-background">
+                <div class="hero-gradient"></div>
+                <div class="hero-pattern"></div>
             </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="features-section">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Features Designed for Success</h2>
-            <div class="features-grid">
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-calendar-alt"></i>
-                    <h3>Smart Timetable Creation</h3>
-                    <p>Create a balanced and effective study schedule in minutes with our AI-powered timetable
-                        generator.</p>
-                </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>Progress Tracking</h3>
-                    <p>Visualize your progress with insightful analytics and stay motivated to reach your goals.</p>
-                </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-                    <i class="fas fa-bell"></i>
-                    <h3>Reminders & Notifications</h3>
-                    <p>Never miss a study session with customizable reminders and notifications.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials-section">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Student Testimonials</h2>
-            <div class="testimonials-grid">
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
-                    <img src="https://i.pravatar.cc/150?img=1" alt="Student Avatar">
-                    <p>"AuraPlan has been a game-changer for my studies. I feel so much more organized and in control."
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-badge" data-aos="fade-up">
+                        <i class="fas fa-star"></i>
+                        <span>Trusted by 50,000+ students worldwide</span>
+                    </div>
+                    <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">
+                        Transform Your Study Journey with
+                        <span class="gradient-text">AI-Powered Planning</span>
+                    </h1>
+                    <p class="hero-description" data-aos="fade-up" data-aos-delay="200">
+                        Stop struggling with scattered notes and missed deadlines. AuraPlan's intelligent system creates
+                        personalized study schedules, tracks your progress, and adapts to your learning style for
+                        maximum efficiency.
                     </p>
-                    <h4>- Sarah J.</h4>
-                </div>
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
-                    <img src="https://i.pravatar.cc/150?img=2" alt="Student Avatar">
-                    <p>"The progress tracking feature is amazing! It keeps me motivated to see how far I've come."</p>
-                    <h4>- Michael B.</h4>
-                </div>
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
-                    <img src="https://i.pravatar.cc/150?img=3" alt="Student Avatar">
-                    <p>"I love the reminders. They help me stay on track even on my busiest days."</p>
-                    <h4>- Emily L.</h4>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Free Resources Section -->
-    <section id="resources" class="resources-section">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Free Study Resources for You</h2>
-            <p class="section-subtitle" data-aos="fade-up">Explore free guides, videos, and templates to boost your
-                productivity.</p>
-            <div class="resources-layout">
-                <div class="resources-image" data-aos="fade-left" data-aos-delay="400">
-                    <img src="resources.jpg" alt="Resources Illustration">
-                </div>
-                <div class="resources-content">
-                    <div class="resources-grid">
-                        <div class="resource-card" data-aos="fade-up" data-aos-delay="100">
-                            <i class="fas fa-file-pdf"></i>
-                            <h3>Free Study Guide</h3>
-                            <p>Download our comprehensive guide to effective study techniques.</p>
-                            <a href="#" class="resource-link">Download Now</a>
+                    <div class="hero-actions" data-aos="fade-up" data-aos-delay="300">
+                        <a href="login.html" class="btn-primary btn-lg">
+                            <i class="fas fa-rocket"></i>
+                            Start Your Free Trial
+                        </a>
+                        <button class="btn-ghost btn-lg demo-btn">
+                            <i class="fas fa-play"></i>
+                            Watch Demo
+                        </button>
+                    </div>
+                    <div class="hero-stats" data-aos="fade-up" data-aos-delay="400">
+                        <div class="stat-item">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">Success Rate</div>
                         </div>
-                        <div class="resource-card" data-aos="fade-up" data-aos-delay="200">
-                            <i class="fab fa-youtube"></i>
-                            <h3>Motivational Study Videos</h3>
-                            <p>Watch our curated playlist of study music and motivational videos.</p>
-                            <a href="https://www.youtube.com/watch?v=5qap5aO4i9A" target="_blank"
-                                class="resource-link">Watch Now</a>
+                        <div class="stat-item">
+                            <div class="stat-number">3x</div>
+                            <div class="stat-label">Faster Learning</div>
                         </div>
-                        <div class="resource-card" data-aos="fade-up" data-aos-delay="300">
-                            <i class="fas fa-palette"></i>
-                            <h3>Printable Planner Templates</h3>
-                            <p>Get access to our collection of free printable planner templates.</p>
-                            <a href="#" class="resource-link">Get Templates</a>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">AI Support</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual" data-aos="fade-left" data-aos-delay="200">
+                    <div class="hero-dashboard">
+                        <div class="dashboard-header">
+                            <div class="dashboard-nav">
+                                <div class="nav-dot active"></div>
+                                <div class="nav-dot"></div>
+                                <div class="nav-dot"></div>
+                            </div>
+                            <div class="dashboard-title">Study Dashboard</div>
+                        </div>
+                        <div class="dashboard-content">
+                            <div class="progress-ring">
+                                <svg class="progress-svg" viewBox="0 0 100 100">
+                                    <defs>
+                                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#6366F1" />
+                                            <stop offset="100%" stop-color="#8B5CF6" />
+                                        </linearGradient>
+                                    </defs>
+                                    <circle cx="50" cy="50" r="45" class="progress-bg"></circle>
+                                    <circle cx="50" cy="50" r="45" class="progress-fill" style="--progress: 75">
+                                    </circle>
+                                </svg>
+                                <div class="progress-text">
+                                    <div class="progress-number">75%</div>
+                                    <div class="progress-label">Complete</div>
+                                </div>
+                            </div>
+                            <div class="dashboard-cards">
+                                <div class="mini-card">
+                                    <i class="fas fa-book"></i>
+                                    <span>12 Subjects</span>
+                                </div>
+                                <div class="mini-card">
+                                    <i class="fas fa-clock"></i>
+                                    <span>4h Today</span>
+                                </div>
+                                <div class="mini-card">
+                                    <i class="fas fa-trophy"></i>
+                                    <span>Level 8</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="floating-elements">
+                        <div class="floating-card card-1">
+                            <i class="fas fa-brain"></i>
+                            <span>AI Insights</span>
+                        </div>
+                        <div class="floating-card card-2">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Progress</span>
+                        </div>
+                        <div class="floating-card card-3">
+                            <i class="fas fa-bell"></i>
+                            <span>Reminders</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Pricing Section -->
-    <section id="pricing" class="pricing-section">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Choose Your Plan</h2>
-            <div class="pricing-grid">
-                <div class="pricing-card" data-aos="fade-up" data-aos-delay="100">
-                    <h3>Free</h3>
-                    <p class="price">$0<span>/month</span></p>
-                    <ul>
-                        <li><i class="fas fa-check"></i> Smart Timetable Creation</li>
-                        <li><i class="fas fa-check"></i> Basic Progress Tracking</li>
-                        <li><i class="fas fa-times"></i> Reminders & Notifications</li>
-                    </ul>
-                    <a href="#" class="cta-button">Subscribe Now</a>
+        <!-- Features Section -->
+        <section id="features" class="features-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="section-badge">
+                        <i class="fas fa-magic"></i>
+                        <span>Powerful Features</span>
+                    </div>
+                    <h2 class="section-title">Everything you need to excel in your studies</h2>
+                    <p class="section-description">Our AI-powered platform combines cutting-edge technology with proven
+                        study methodologies to maximize your learning potential.</p>
                 </div>
-                <div class="pricing-card pro" data-aos="fade-up" data-aos-delay="200">
-                    <h3>Pro</h3>
-                    <p class="price">$9<span>/month</span></p>
-                    <ul>
-                        <li><i class="fas fa-check"></i> Smart Timetable Creation</li>
-                        <li><i class="fas fa-check"></i> Advanced Progress Tracking</li>
-                        <li><i class="fas fa-check"></i> Reminders & Notifications</li>
-                    </ul>
-                    <a href="#" class="cta-button">Subscribe Now</a>
-                </div>
-                <div class="pricing-card" data-aos="fade-up" data-aos-delay="300">
-                    <h3>Premium</h3>
-                    <p class="price">$19<span>/month</span></p>
-                    <ul>
-                        <li><i class="fas fa-check"></i> All Pro Features</li>
-                        <li><i class="fas fa-check"></i> Personalized Coaching</li>
-                        <li><i class="fas fa-check"></i> Priority Support</li>
-                    </ul>
-                    <a href="#" class="cta-button">Subscribe Now</a>
+
+                <div class="features-showcase">
+                    <div class="feature-main" data-aos="fade-right">
+                        <div class="feature-visual">
+                            <div class="feature-mockup">
+                                <div class="mockup-header">
+                                    <div class="mockup-dots">
+                                        <span></span><span></span><span></span>
+                                    </div>
+                                    <div class="mockup-title">AI Study Planner</div>
+                                </div>
+                                <div class="mockup-content">
+                                    <div class="schedule-item active">
+                                        <div class="schedule-time">9:00 AM</div>
+                                        <div class="schedule-subject">Mathematics</div>
+                                        <div class="schedule-progress">
+                                            <div class="progress-bar" style="--width: 80%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-item">
+                                        <div class="schedule-time">11:00 AM</div>
+                                        <div class="schedule-subject">Physics</div>
+                                        <div class="schedule-progress">
+                                            <div class="progress-bar" style="--width: 60%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-item">
+                                        <div class="schedule-time">2:00 PM</div>
+                                        <div class="schedule-subject">Chemistry</div>
+                                        <div class="schedule-progress">
+                                            <div class="progress-bar" style="--width: 40%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature-content">
+                            <div class="feature-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3>AI-Powered Smart Scheduling</h3>
+                            <p>Our advanced AI analyzes your learning patterns, peak performance hours, and subject
+                                difficulty to create the perfect study schedule that adapts to your needs.</p>
+                            <ul class="feature-benefits">
+                                <li><i class="fas fa-check"></i> Personalized study sessions</li>
+                                <li><i class="fas fa-check"></i> Optimal time allocation</li>
+                                <li><i class="fas fa-check"></i> Automatic adjustments</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="feature-card modern" data-aos="fade-up" data-aos-delay="100">
+                            <div class="feature-icon-bg">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h4>Real-time Analytics</h4>
+                            <p>Track your progress with detailed insights and performance metrics that help you identify
+                                strengths and areas for improvement.</p>
+                            <div class="feature-preview">
+                                <div class="mini-chart">
+                                    <div class="chart-bar" style="--height: 60%"></div>
+                                    <div class="chart-bar" style="--height: 80%"></div>
+                                    <div class="chart-bar" style="--height: 45%"></div>
+                                    <div class="chart-bar" style="--height: 90%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card modern" data-aos="fade-up" data-aos-delay="200">
+                            <div class="feature-icon-bg">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h4>Study Groups & Collaboration</h4>
+                            <p>Connect with study partners, join virtual study rooms, and collaborate on projects with
+                                integrated communication tools.</p>
+                            <div class="feature-preview">
+                                <div class="avatar-stack">
+                                    <div class="avatar"></div>
+                                    <div class="avatar"></div>
+                                    <div class="avatar"></div>
+                                    <div class="avatar-more">+5</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card modern" data-aos="fade-up" data-aos-delay="300">
+                            <div class="feature-icon-bg">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <h4>Cross-Platform Sync</h4>
+                            <p>Access your study materials and progress from any device. Seamless synchronization keeps
+                                you productive wherever you are.</p>
+                            <div class="feature-preview">
+                                <div class="device-icons">
+                                    <i class="fas fa-laptop"></i>
+                                    <i class="fas fa-tablet-alt"></i>
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card modern" data-aos="fade-up" data-aos-delay="400">
+                            <div class="feature-icon-bg">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <h4>Gamified Learning</h4>
+                            <p>Stay motivated with achievement badges, level progression, and friendly competition that
+                                makes studying engaging and fun.</p>
+                            <div class="feature-preview">
+                                <div class="badges">
+                                    <div class="badge-item">🏆</div>
+                                    <div class="badge-item">⭐</div>
+                                    <div class="badge-item">🎯</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="how-it-works-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="section-badge">
+                        <i class="fas fa-cogs"></i>
+                        <span>How It Works</span>
+                    </div>
+                    <h2 class="section-title">Get started in 3 simple steps</h2>
+                    <p class="section-description">Transform your study routine with our intuitive platform designed for
+                        maximum efficiency.</p>
+                </div>
+
+                <div class="steps-container">
+                    <div class="step-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="step-visual">
+                            <div class="step-number">1</div>
+                            <div class="step-icon">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                        </div>
+                        <div class="step-content">
+                            <h3>Create Your Profile</h3>
+                            <p>Tell us about your subjects, goals, and learning preferences. Our AI will understand your
+                                unique needs.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-connector" data-aos="fade-up" data-aos-delay="150"></div>
+
+                    <div class="step-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="step-visual">
+                            <div class="step-number">2</div>
+                            <div class="step-icon">
+                                <i class="fas fa-magic"></i>
+                            </div>
+                        </div>
+                        <div class="step-content">
+                            <h3>AI Creates Your Plan</h3>
+                            <p>Our intelligent system generates a personalized study schedule optimized for your success
+                                and learning style.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-connector" data-aos="fade-up" data-aos-delay="250"></div>
+
+                    <div class="step-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="step-visual">
+                            <div class="step-number">3</div>
+                            <div class="step-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                        </div>
+                        <div class="step-content">
+                            <h3>Start Learning & Improving</h3>
+                            <p>Follow your personalized plan, track progress, and watch as your academic performance
+                                soars to new heights.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="testimonials-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="section-badge">
+                        <i class="fas fa-heart"></i>
+                        <span>Student Success Stories</span>
+                    </div>
+                    <h2 class="section-title">Loved by students worldwide</h2>
+                    <p class="section-description">Join thousands of students who have transformed their academic
+                        journey with AuraPlan.</p>
+                </div>
+
+                <div class="testimonials-carousel" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-card featured">
+                        <div class="testimonial-content">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <blockquote>
+                                "AuraPlan completely transformed my study habits. I went from struggling with time
+                                management to achieving a 3.9 GPA. The AI recommendations are incredibly accurate and
+                                the progress tracking keeps me motivated every day."
+                            </blockquote>
+                            <div class="testimonial-author">
+                                <img src="https://i.pravatar.cc/150?img=1" alt="Sarah Chen">
+                                <div class="author-info">
+                                    <div class="author-name">Sarah Chen</div>
+                                    <div class="author-title">Computer Science Student, MIT</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonials-grid">
+                        <div class="testimonial-card compact">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p>"The gamification features make studying actually fun. I've never been more consistent
+                                with my study routine!"</p>
+                            <div class="testimonial-author">
+                                <img src="https://i.pravatar.cc/150?img=2" alt="Marcus Johnson">
+                                <div class="author-info">
+                                    <div class="author-name">Marcus Johnson</div>
+                                    <div class="author-title">Medical Student</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card compact">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p>"The cross-platform sync is perfect for my busy lifestyle. I can study anywhere and my
+                                progress is always up to date."</p>
+                            <div class="testimonial-author">
+                                <img src="https://i.pravatar.cc/150?img=3" alt="Emily Rodriguez">
+                                <div class="author-info">
+                                    <div class="author-name">Emily Rodriguez</div>
+                                    <div class="author-title">Business Major</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card compact">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p>"Study groups feature helped me connect with amazing peers. We motivate each other and
+                                share resources seamlessly."</p>
+                            <div class="testimonial-author">
+                                <img src="https://i.pravatar.cc/150?img=4" alt="David Kim">
+                                <div class="author-info">
+                                    <div class="author-name">David Kim</div>
+                                    <div class="author-title">Engineering Student</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="social-proof" data-aos="fade-up" data-aos-delay="400">
+                    <div class="proof-item">
+                        <div class="proof-number">50,000+</div>
+                        <div class="proof-label">Active Students</div>
+                    </div>
+                    <div class="proof-item">
+                        <div class="proof-number">4.9/5</div>
+                        <div class="proof-label">Average Rating</div>
+                    </div>
+                    <div class="proof-item">
+                        <div class="proof-number">98%</div>
+                        <div class="proof-label">Success Rate</div>
+                    </div>
+                    <div class="proof-item">
+                        <div class="proof-number">150+</div>
+                        <div class="proof-label">Universities</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content" data-aos="zoom-in">
+                    <div class="cta-visual">
+                        <div class="cta-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="success-indicators">
+                            <div class="indicator">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Improved Grades</span>
+                            </div>
+                            <div class="indicator">
+                                <i class="fas fa-clock"></i>
+                                <span>Better Time Management</span>
+                            </div>
+                            <div class="indicator">
+                                <i class="fas fa-brain"></i>
+                                <span>Enhanced Focus</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cta-text">
+                        <h2>Ready to transform your academic journey?</h2>
+                        <p>Join thousands of successful students who have already revolutionized their study habits with
+                            AuraPlan's AI-powered platform.</p>
+                        <div class="cta-actions">
+                            <a href="login.html" class="btn-primary btn-lg">
+                                <i class="fas fa-rocket"></i>
+                                Start Your Free Trial
+                            </a>
+                            <div class="cta-note">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>No credit card required • 14-day free trial</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="pricing-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="section-badge">
+                        <i class="fas fa-tags"></i>
+                        <span>Simple Pricing</span>
+                    </div>
+                    <h2 class="section-title">Choose the perfect plan for your goals</h2>
+                    <p class="section-description">Start free and upgrade as you grow. All plans include our core AI
+                        features.</p>
+                </div>
+
+                <div class="pricing-toggle" data-aos="fade-up" data-aos-delay="100">
+                    <span class="toggle-label">Monthly</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="pricing-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-label">Annual <span class="discount-badge">Save 20%</span></span>
+                </div>
+
+                <div class="pricing-grid" data-aos="fade-up" data-aos-delay="200">
+                    <div class="pricing-card starter">
+                        <div class="card-header">
+                            <div class="plan-icon">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <h3 class="plan-name">Starter</h3>
+                            <p class="plan-description">Perfect for getting started</p>
+                        </div>
+                        <div class="card-pricing">
+                            <div class="price-display">
+                                <span class="currency">$</span>
+                                <span class="amount monthly-price">0</span>
+                                <span class="amount annual-price" style="display: none;">0</span>
+                                <span class="period">/month</span>
+                            </div>
+                            <div class="price-note">Forever free</div>
+                        </div>
+                        <div class="card-features">
+                            <ul>
+                                <li><i class="fas fa-check"></i> Basic AI study planner</li>
+                                <li><i class="fas fa-check"></i> 3 subjects maximum</li>
+                                <li><i class="fas fa-check"></i> Progress tracking</li>
+                                <li><i class="fas fa-check"></i> Mobile app access</li>
+                                <li class="unavailable"><i class="fas fa-times"></i> Advanced analytics</li>
+                                <li class="unavailable"><i class="fas fa-times"></i> Study groups</li>
+                            </ul>
+                        </div>
+                        <div class="card-action">
+                            <a href="login.html" class="btn-secondary w-full">Get Started Free</a>
+                        </div>
+                    </div>
+
+                    <div class="pricing-card pro popular">
+                        <div class="popular-badge">
+                            <i class="fas fa-crown"></i>
+                            <span>Most Popular</span>
+                        </div>
+                        <div class="card-header">
+                            <div class="plan-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h3 class="plan-name">Pro</h3>
+                            <p class="plan-description">For serious students</p>
+                        </div>
+                        <div class="card-pricing">
+                            <div class="price-display">
+                                <span class="currency">$</span>
+                                <span class="amount monthly-price">12</span>
+                                <span class="amount annual-price" style="display: none;">10</span>
+                                <span class="period">/month</span>
+                            </div>
+                            <div class="price-note monthly-note">Billed monthly</div>
+                            <div class="price-note annual-note" style="display: none;">Billed annually</div>
+                        </div>
+                        <div class="card-features">
+                            <ul>
+                                <li><i class="fas fa-check"></i> Advanced AI study planner</li>
+                                <li><i class="fas fa-check"></i> Unlimited subjects</li>
+                                <li><i class="fas fa-check"></i> Advanced analytics</li>
+                                <li><i class="fas fa-check"></i> Study groups & collaboration</li>
+                                <li><i class="fas fa-check"></i> Priority support</li>
+                                <li><i class="fas fa-check"></i> Custom study goals</li>
+                            </ul>
+                        </div>
+                        <div class="card-action">
+                            <a href="login.html" class="btn-primary w-full">Start Free Trial</a>
+                        </div>
+                    </div>
+
+                    <div class="pricing-card premium">
+                        <div class="card-header">
+                            <div class="plan-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <h3 class="plan-name">Premium</h3>
+                            <p class="plan-description">Maximum performance</p>
+                        </div>
+                        <div class="card-pricing">
+                            <div class="price-display">
+                                <span class="currency">$</span>
+                                <span class="amount monthly-price">24</span>
+                                <span class="amount annual-price" style="display: none;">20</span>
+                                <span class="period">/month</span>
+                            </div>
+                            <div class="price-note monthly-note">Billed monthly</div>
+                            <div class="price-note annual-note" style="display: none;">Billed annually</div>
+                        </div>
+                        <div class="card-features">
+                            <ul>
+                                <li><i class="fas fa-check"></i> Everything in Pro</li>
+                                <li><i class="fas fa-check"></i> 1-on-1 study coaching</li>
+                                <li><i class="fas fa-check"></i> Custom AI models</li>
+                                <li><i class="fas fa-check"></i> Advanced integrations</li>
+                                <li><i class="fas fa-check"></i> White-label options</li>
+                                <li><i class="fas fa-check"></i> 24/7 priority support</li>
+                            </ul>
+                        </div>
+                        <div class="card-action">
+                            <a href="login.html" class="btn-secondary w-full">Start Free Trial</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pricing-faq" data-aos="fade-up" data-aos-delay="400">
+                    <h3>Frequently Asked Questions</h3>
+                    <div class="faq-grid">
+                        <div class="faq-item">
+                            <h4>Can I change plans anytime?</h4>
+                            <p>Yes! You can upgrade, downgrade, or cancel your plan at any time. Changes take effect
+                                immediately.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Is there a free trial?</h4>
+                            <p>Absolutely! All paid plans come with a 14-day free trial. No credit card required to
+                                start.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>What payment methods do you accept?</h4>
+                            <p>We accept all major credit cards, PayPal, and bank transfers for annual plans.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Do you offer student discounts?</h4>
+                            <p>Yes! Students get 50% off all paid plans with a valid student email address.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
-    <footer id="contact" class="footer">
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-about">
-                    <h3>AuraPlan</h3>
-                    <p>Plan Smarter, Study Better.</p>
+                <div class="footer-brand">
+                    <div class="logo-container">
+                        <div class="logo-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <span class="logo-text">AuraPlan</span>
+                    </div>
+                    <p class="footer-description">Empowering students worldwide with AI-powered study planning and
+                        personalized learning experiences.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
                 </div>
+
                 <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-contact">
-                    <h4>Contact Us</h4>
-                    <p>contact@auraplan.com</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <ul>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#pricing">Pricing</a></li>
+                            <li><a href="#how-it-works">How it Works</a></li>
+                            <li><a href="#">API</a></li>
+                            <li><a href="#">Integrations</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">Study Guides</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Webinars</a></li>
+                            <li><a href="#">Templates</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Press</a></li>
+                            <li><a href="#">Partners</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Community</a></li>
+                            <li><a href="#">Status</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
+
             <div class="footer-bottom">
-                <p>&copy; 2025 AuraPlan. All rights reserved.</p>
+                <div class="footer-bottom-content">
+                    <p>&copy; 2025 AuraPlan. All rights reserved.</p>
+                    <div class="footer-bottom-links">
+                        <a href="#">Privacy</a>
+                        <a href="#">Terms</a>
+                        <a href="#">Cookies</a>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- Demo Video Modal -->
+    <div class="modal-overlay" id="demo-modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/navigation.js"></script>
     <script src="js/landing.js"></script>
 </body>
 
