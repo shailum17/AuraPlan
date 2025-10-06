@@ -461,3 +461,203 @@ function filterTasks() {
     renderTasks(filteredTasks);
 }
 
+
+// FAB Menu functionality
+function toggleFabMenu() {
+    const fabActions = document.querySelector('.floating-actions');
+    if (fabActions) {
+        fabActions.classList.toggle('active');
+    }
+}
+
+// Close FAB menu when clicking outside
+document.addEventListener('click', (e) => {
+    const fabActions = document.querySelector('.floating-actions');
+    if (fabActions && !fabActions.contains(e.target)) {
+        fabActions.classList.remove('active');
+    }
+});
+
+// Modal functionality
+function openTaskModal() {
+    const modal = document.getElementById('task-modal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeTaskModal() {
+    const modal = document.getElementById('task-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+function openGoalModal() {
+    // Placeholder for goal modal
+    console.log('Opening goal modal...');
+}
+
+function openEventModal() {
+    // Placeholder for event modal
+    console.log('Opening event modal...');
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal-overlay')) {
+        e.target.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const activeModal = document.querySelector('.modal-overlay.active');
+        if (activeModal) {
+            activeModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+});
+
+// Enhanced task rendering with modern cards
+function renderTasks() {
+    const taskList = document.getElementById('task-list');
+    if (!taskList) return;
+    
+    const tasks = getTasks();
+    
+    if (tasks.length === 0) {
+        taskList.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <h3>No tasks yet</h3>
+                <p>Create your first task to get started with organizing your studies.</p>
+                <button class="btn btn-primary" onclick="openTaskModal()">
+                    <i class="fas fa-plus"></i>
+                    Add Your First Task
+                </button>
+            </div>
+        `;
+        return;
+    }
+    
+    taskList.innerHTML = tasks.map(task => `
+        <div class="task-card ${task.completed ? 'completed' : ''}" data-task-id="${task.id}">
+            <div class="task-header">
+                <div class="task-priority ${task.priority}"></div>
+                <div class="task-actions">
+                    <button class="task-action-btn" onclick="toggleTaskComplete('${task.id}')" title="${task.completed ? 'Mark as incomplete' : 'Mark as complete'}">
+                        <i class="fas ${task.completed ? 'fa-undo' : 'fa-check'}"></i>
+                    </button>
+                    <button class="task-action-btn" onclick="editTask('${task.id}')" title="Edit task">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="task-action-btn delete" onclick="deleteTask('${task.id}')" title="Delete task">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <h3 class="task-title">${task.title}</h3>
+            ${task.description ? `<p class="task-description">${task.description}</p>` : ''}
+            <div class="task-meta">
+                <div class="task-due-date">
+                    <i class="fas fa-calendar"></i>
+                    <span>${task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'No due date'}</span>
+                </div>
+                <div class="task-category">${task.category || 'General'}</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Add empty state styles
+const emptyStateStyles = `
+    .empty-state {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: var(--space-16) var(--space-8);
+        background: var(--dashboard-card-bg);
+        border: 2px dashed var(--dashboard-border);
+        border-radius: var(--radius-xl);
+        color: var(--dashboard-text-muted);
+    }
+    
+    .empty-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--light-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto var(--space-4);
+        font-size: 2rem;
+        color: var(--dashboard-text-muted);
+    }
+    
+    .empty-state h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--dashboard-text);
+        margin: 0 0 var(--space-2) 0;
+    }
+    
+    .empty-state p {
+        margin: 0 0 var(--space-6) 0;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .task-action-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: transparent;
+        border: 1px solid var(--dashboard-border);
+        color: var(--dashboard-text-muted);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+        font-size: 0.875rem;
+    }
+    
+    .task-action-btn:hover {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+    
+    .task-action-btn.delete:hover {
+        background: var(--status-error);
+        border-color: var(--status-error);
+    }
+    
+    .task-actions {
+        display: flex;
+        gap: var(--space-2);
+        opacity: 0;
+        transition: var(--transition);
+    }
+    
+    .task-card:hover .task-actions {
+        opacity: 1;
+    }
+`;
+
+// Add styles to head
+if (!document.querySelector('#dashboard-dynamic-styles')) {
+    const style = document.createElement('style');
+    style.id = 'dashboard-dynamic-styles';
+    style.textContent = emptyStateStyles;
+    document.head.appendChild(style);
+}

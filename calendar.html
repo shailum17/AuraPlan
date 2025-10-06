@@ -3,51 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar - Smart Study Planner</title>
+    <title>Calendar - AuraPlan</title>
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/navigation.css">
     <link rel="stylesheet" href="styles/dashboard.css">
     <link rel="stylesheet" href="styles/calendar.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4CAF50">
+    <meta name="theme-color" content="#4F46E5">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 </head>
 <body>
-    <div class="dashboard-wrapper">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <i class="fas fa-graduation-cap"></i>
-                <h2>AuraPlan</h2>
-            </div>
-            <ul class="sidebar-nav">
-                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li class="active"><a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
-                <li><a href="goals.html"><i class="fas fa-bullseye"></i> Goals</a></li>
-                <li><a href="analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>
-                <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
-                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
-            </ul>
-            <div class="sidebar-footer">
-                <button class="logout-btn" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Logout
-                </button>
-            </div>
-        </aside>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <header class="main-header">
-                <div class="calendar-header">
-                    <h1>Study Calendar</h1>
-                    <div class="calendar-controls">
-                        <div class="view-switcher">
-                            <button class="view-btn active" data-view="month">Month</button>
-                            <button class="view-btn" data-view="week">Week</button>
-                            <button class="view-btn" data-view="timeline">Timeline</button>
+    <!-- Main Content -->
+    <main id="main-content" class="main-content">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="header-left">
+                        <div class="page-title">
+                            <h1>Study Calendar</h1>
+                            <p class="page-subtitle">Plan and organize your study schedule</p>
                         </div>
-                        <div class="calendar-nav">
+                    </div>
+                    <div class="header-right">
+                        <div class="calendar-controls">
+                            <div class="view-switcher">
+                                <button class="btn btn-ghost btn-sm view-btn active" data-view="month">
+                                    <i class="fas fa-calendar"></i>
+                                    Month
+                                </button>
+                                <button class="btn btn-ghost btn-sm view-btn" data-view="week">
+                                    <i class="fas fa-calendar-week"></i>
+                                    Week
+                                </button>
+                                <button class="btn btn-ghost btn-sm view-btn" data-view="agenda">
+                                    <i class="fas fa-list"></i>
+                                    Agenda
+                                </button>
+                            </div>
+                            <button class="btn btn-primary" onclick="openEventModal()">
+                                <i class="fas fa-plus"></i>
+                                Add Event
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
                             <button class="nav-btn" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
                             <button class="nav-btn today-btn">Today</button>
                             <button class="nav-btn" id="next-btn"><i class="fas fa-chevron-right"></i></button>

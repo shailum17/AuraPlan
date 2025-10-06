@@ -2,141 +2,255 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - AuraPlan</title>
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/navigation.css">
     <link rel="stylesheet" href="styles/dashboard.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4CAF50">
+    <meta name="theme-color" content="#4F46E5">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 </head>
 <body>
-    <div class="dashboard-wrapper">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <i class="fas fa-graduation-cap"></i>
-                <h2>AuraPlan</h2>
-            </div>
-            <ul class="sidebar-nav">
-                <li class="active"><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
-                <li><a href="goals.html"><i class="fas fa-bullseye"></i> Goals</a></li>
-                <li><a href="analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>
-                <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
-                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
-            </ul>
-            <div class="sidebar-footer">
-                <button class="logout-btn" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Logout
-                </button>
-            </div>
-        </aside>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <header class="main-header">
-                <div class="user-info">
-                    Welcome, <span id="user-email">Loading...</span>
-                </div>
-            </header>
-
-            <!-- Stats Section -->
-            <section class="stats-section">
-                <div class="stat-card">
-                    <div class="stat-icon total">
-                        <i class="fas fa-tasks"></i>
-                    </div>
-                    <div class="stat-info">
-                        <p>Total Tasks</p>
-                        <h3 id="total-tasks">0</h3>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon completed">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="stat-info">
-                        <p>Completed</p>
-                        <h3 id="completed-tasks">0</h3>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon pending">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="stat-info">
-                        <p>Pending</p>
-                        <h3 id="pending-tasks">0</h3>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Task Management Section -->
-            <section class="task-section">
-                <div class="task-header">
-                    <h2>My Tasks</h2>
-                    <div class="task-controls">
-                        <div class="search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="search-input" placeholder="Search tasks..." oninput="filterTasks()">
+    <!-- Main Content -->
+    <main id="main-content" class="main-content">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="header-left">
+                        <div class="page-title">
+                            <h1>Dashboard</h1>
+                            <p class="page-subtitle">Welcome back! Here's what's happening with your studies.</p>
                         </div>
-                        <div class="filter-buttons">
-                            <button class="filter-btn active" data-filter="all">All</button>
-                            <button class="filter-btn" data-filter="pending">Pending</button>
-                            <button class="filter-btn" data-filter="completed">Completed</button>
+                    </div>
+                    <div class="header-right">
+                        <div class="user-info">
+                            <div class="user-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="user-details">
+                                <span class="user-name" id="user-email">Loading...</span>
+                                <span class="user-status">Online</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="task-list" id="task-list">
+            </div>
+        </header>
+
+        <!-- Stats Section -->
+        <section class="dashboard-stats py-8">
+            <div class="container">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="stat-content">
+                            <div class="stat-icon-wrapper">
+                                <div class="stat-icon total">
+                                    <i class="fas fa-tasks"></i>
+                                </div>
+                            </div>
+                            <div class="stat-info">
+                                <h3 class="stat-number" id="total-tasks">0</h3>
+                                <p class="stat-label">Total Tasks</p>
+                                <div class="stat-trend">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+12% from last week</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="stat-content">
+                            <div class="stat-icon-wrapper">
+                                <div class="stat-icon completed">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </div>
+                            <div class="stat-info">
+                                <h3 class="stat-number" id="completed-tasks">0</h3>
+                                <p class="stat-label">Completed</p>
+                                <div class="stat-trend positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+8% from last week</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="stat-content">
+                            <div class="stat-icon-wrapper">
+                                <div class="stat-icon pending">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                            </div>
+                            <div class="stat-info">
+                                <h3 class="stat-number" id="pending-tasks">0</h3>
+                                <p class="stat-label">Pending</p>
+                                <div class="stat-trend">
+                                    <i class="fas fa-arrow-down"></i>
+                                    <span>-5% from last week</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="stat-content">
+                            <div class="stat-icon-wrapper">
+                                <div class="stat-icon productivity">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                            </div>
+                            <div class="stat-info">
+                                <h3 class="stat-number">85%</h3>
+                                <p class="stat-label">Productivity</p>
+                                <div class="stat-trend positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+15% from last week</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Task Management Section -->
+        <section class="task-management py-8">
+            <div class="container">
+                <div class="section-header mb-8" data-aos="fade-up">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div>
+                            <h2 class="section-title">My Tasks</h2>
+                            <p class="section-description">Manage and track your daily tasks and assignments</p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-input" placeholder="Search tasks..." oninput="filterTasks()">
+                            </div>
+                            <button class="btn btn-primary" onclick="openTaskModal()">
+                                <i class="fas fa-plus"></i>
+                                Add Task
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="task-filters mb-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">
+                            <i class="fas fa-list"></i>
+                            All Tasks
+                        </button>
+                        <button class="filter-btn" data-filter="pending">
+                            <i class="fas fa-clock"></i>
+                            Pending
+                        </button>
+                        <button class="filter-btn" data-filter="completed">
+                            <i class="fas fa-check-circle"></i>
+                            Completed
+                        </button>
+                        <button class="filter-btn" data-filter="high">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            High Priority
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="task-grid" id="task-list" data-aos="fade-up" data-aos-delay="200">
                     <!-- Tasks will be rendered here by JavaScript -->
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Floating Action Button -->
-            <button class="fab" onclick="openTaskModal()">
+        <!-- Quick Actions Floating Button -->
+        <div class="floating-actions">
+            <button class="fab-main" onclick="toggleFabMenu()">
                 <i class="fas fa-plus"></i>
             </button>
-        </main>
-    </div>
+            <div class="fab-menu">
+                <button class="fab-item" onclick="openTaskModal()" title="Add Task">
+                    <i class="fas fa-tasks"></i>
+                </button>
+                <button class="fab-item" onclick="openGoalModal()" title="Add Goal">
+                    <i class="fas fa-bullseye"></i>
+                </button>
+                <button class="fab-item" onclick="openEventModal()" title="Add Event">
+                    <i class="fas fa-calendar-plus"></i>
+                </button>
+            </div>
+        </div>
+    </main>
 
     <!-- Task Modal -->
-    <div id="task-modal" class="modal">
+    <div id="task-modal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modal-title">Add New Task</h3>
-                <button class="close-btn" onclick="closeTaskModal()">
+                <button class="modal-close" onclick="closeTaskModal()" aria-label="Close modal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <form id="task-form">
-                <div class="form-group">
-                    <label for="task-title">Task Title</label>
-                    <input type="text" id="task-title" placeholder="Enter task title" required>
+            <form id="task-form" class="modal-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="task-title" class="form-label">Task Title</label>
+                        <input type="text" id="task-title" class="form-control" placeholder="Enter task title" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="task-description">Description</label>
-                    <textarea id="task-description" placeholder="Enter task description" rows="3"></textarea>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="task-description" class="form-label">Description</label>
+                        <textarea id="task-description" class="form-control" placeholder="Enter task description" rows="3"></textarea>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="task-priority">Priority</label>
-                    <select id="task-priority">
-                        <option value="low">Low</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="high">High</option>
-                    </select>
+                
+                <div class="form-row grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label for="task-priority" class="form-label">Priority</label>
+                        <select id="task-priority" class="form-control">
+                            <option value="low">🟢 Low Priority</option>
+                            <option value="medium" selected>🟡 Medium Priority</option>
+                            <option value="high">🔴 High Priority</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-due-date" class="form-label">Due Date</label>
+                        <input type="date" id="task-due-date" class="form-control">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="task-due-date">Due Date</label>
-                    <input type="date" id="task-due-date">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="task-category" class="form-label">Category</label>
+                        <select id="task-category" class="form-control">
+                            <option value="study">📚 Study</option>
+                            <option value="assignment">📝 Assignment</option>
+                            <option value="project">🚀 Project</option>
+                            <option value="exam">🎯 Exam Prep</option>
+                            <option value="personal">👤 Personal</option>
+                        </select>
+                    </div>
                 </div>
+                
                 <div class="modal-actions">
-                    <button type="button" class="cancel-btn" onclick="closeTaskModal()">Cancel</button>
-                    <button type="submit" class="save-btn">
+                    <button type="button" class="btn btn-secondary" onclick="closeTaskModal()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i>
                         Save Task
                     </button>
@@ -157,6 +271,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="js/firebase-config.js"></script>
+    <script src="js/navigation.js"></script>
     <script src="js/local-storage.js"></script>
     <script src="js/notifications.js"></script>
     <script src="js/dashboard.js"></script>

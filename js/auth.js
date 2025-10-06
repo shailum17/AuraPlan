@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Auth.js loaded');
     console.log('Firebase available:', typeof firebase !== 'undefined');
     console.log('Auth available:', typeof auth !== 'undefined');
-    
+
     // Check if user is already logged in
     auth.onAuthStateChanged(user => {
         if (user) {
@@ -135,28 +135,28 @@ function togglePassword(id) {
 
 function signInAnonymously() {
     console.log('signInAnonymously function called');
-    
+
     // Check if Firebase is loaded
     if (typeof firebase === 'undefined') {
         console.error('Firebase is not loaded');
         showMessage('Firebase is not loaded. Please refresh the page.', 'error');
         return;
     }
-    
+
     // Check if auth is available
     if (!auth) {
         console.error('Firebase Auth is not initialized');
         showMessage('Authentication service is not available. Please refresh the page.', 'error');
         return;
     }
-    
+
     const loadingOverlay = document.getElementById('loading-overlay');
     if (loadingOverlay) {
         loadingOverlay.style.display = 'flex';
     }
 
     console.log('Attempting anonymous sign in...');
-    
+
     auth.signInAnonymously()
         .then((userCredential) => {
             console.log('Anonymous sign in successful:', userCredential);
@@ -168,13 +168,13 @@ function signInAnonymously() {
         .catch((error) => {
             console.error('Anonymous sign in error:', error);
             let errorMessage = getErrorMessage(error.code);
-            
+
             // Add specific error handling for anonymous auth
             if (error.code === 'auth/operation-not-allowed') {
                 // If anonymous auth is not enabled, provide a fallback
                 console.log('Anonymous auth not enabled, using fallback guest mode');
                 showMessage('Entering guest mode...', 'success');
-                
+
                 // Set a flag in localStorage to indicate guest mode
                 localStorage.setItem('guestMode', 'true');
                 localStorage.setItem('guestUser', JSON.stringify({
@@ -183,13 +183,13 @@ function signInAnonymously() {
                     email: null,
                     isAnonymous: true
                 }));
-                
+
                 setTimeout(() => {
                     window.location.href = 'dashboard.html';
                 }, 1000);
                 return;
             }
-            
+
             showMessage(errorMessage, 'error');
         })
         .finally(() => {
