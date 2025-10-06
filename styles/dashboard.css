@@ -1297,4 +1297,98 @@ body.dark-mode .task-info p {
     .search-box input {
         min-width: 150px;
     }
+}/* E
+rror State Styles */
+.error-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--space-16) var(--space-8);
+    background: var(--dashboard-card-bg);
+    border: 2px solid var(--status-error);
+    border-radius: var(--radius-xl);
+    color: var(--dashboard-text-muted);
+}
+
+.error-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-4);
+    font-size: 2rem;
+    color: var(--status-error);
+}
+
+.error-state h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--dashboard-text);
+    margin: 0 0 var(--space-2) 0;
+}
+
+.error-state p {
+    margin: 0 0 var(--space-6) 0;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Enhanced Loading Overlay */
+.loading-overlay {
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.loading-overlay.dark {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.loading-overlay p {
+    font-size: 0.875rem;
+    color: var(--dashboard-text-muted);
+    margin: 0;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Performance indicator for development */
+.perf-indicator {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: var(--dashboard-card-bg);
+    border: 1px solid var(--dashboard-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-2) var(--space-3);
+    font-size: 0.75rem;
+    color: var(--dashboard-text-muted);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.perf-indicator.show {
+    opacity: 1;
+}
+
+.perf-indicator.fast {
+    border-color: var(--status-success);
+    color: var(--status-success);
+}
+
+.perf-indicator.slow {
+    border-color: var(--status-warning);
+    color: var(--status-warning);
+}
+
+.perf-indicator.very-slow {
+    border-color: var(--status-error);
+    color: var(--status-error);
 }

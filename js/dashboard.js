@@ -293,30 +293,94 @@ function addTask() {
 function getTasks() {
     const taskList = document.getElementById('task-list');
     const loadingOverlay = document.getElementById('loading-overlay');
-    loadingOverlay.style.display = 'flex';
+    
+    // Performance timing
+    const startTime = performance.now();
+    
+    // Show loading only if we expect it to take more than 100ms
+    const showLoading = () => {
+        if (loadingOverlay) {
+            loadingOverlay.style.display = 'flex';
+        }
+    };
+    
+    const hideLoading = () => {
+        if (loadingOverlay) {
+            loadingOverlay.style.display = 'none';
+        }
+    };
 
-    // Load from local storage first
-    let tasks = localStorageManager.getTasks();
-    renderTasks(tasks);
-    updateStats(tasks);
-    loadingOverlay.style.display = 'none';
+    // Load from local storage first (usually very fast)
+    try {
+        let tasks = localStorageManager.getTasks();
+        
+        // If we have a lot of tasks, show loading
+        if (tasks.length > 50) {
+            showLoading();
+        }
+        
+        renderTasks(tasks);
+        updateStats(tasks);
+        
+        const loadTime = performance.now() - startTime;
+        console.log(`Tasks loaded in ${loadTime.toFixed(2)}ms`);
+        
+        // Hide loading with minimum display time for better UX
+        if (loadTime < 100) {
+            hideLoading();
+        } else {
+            setTimeout(hideLoading, Math.max(0, 300 - loadTime));
+        }
+        
+    } catch (error) {
+        console.error('Error loading tasks:', error);
+        hideLoading();
+        showErrorMessage('Failed to load tasks. Please refresh the page.');
+        return;
+    }
 
     // Sync with Firebase if online and authenticated
     if (navigator.onLine && auth.currentUser && !auth.currentUser.isAnonymous) {
         db.collection('tasks').where('uid', '==', currentUser.uid).orderBy('createdAt', 'desc').onSnapshot(snapshot => {
-            let firebaseTasks = [];
-            snapshot.forEach(doc => {
-                firebaseTasks.push({ id: doc.id, ...doc.data() });
-            });
-            
-            // Update local storage with Firebase data
-            localStorageManager.saveTasks(firebaseTasks);
-            renderTasks(firebaseTasks);
-            updateStats(firebaseTasks);
+            try {
+                let firebaseTasks = [];
+                snapshot.forEach(doc => {
+                    firebaseTasks.push({ id: doc.id, ...doc.data() });
+                });
+                
+                // Update local storage with Firebase data
+                localStorageManager.saveTasks(firebaseTasks);
+                renderTasks(firebaseTasks);
+                updateStats(firebaseTasks);
+                
+                console.log(`Firebase sync completed with ${firebaseTasks.length} tasks`);
+            } catch (error) {
+                console.error('Error processing Firebase data:', error);
+            }
         }, error => {
             console.error('Error fetching from Firebase:', error);
             // Continue with local data if Firebase fails
         });
+    }
+}
+
+// Helper function to show error messages
+function showErrorMessage(message) {
+    const taskList = document.getElementById('task-list');
+    if (taskList) {
+        taskList.innerHTML = `
+            <div class="error-state">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3>Oops! Something went wrong</h3>
+                <p>${message}</p>
+                <button class="btn btn-primary" onclick="getTasks()">
+                    <i class="fas fa-refresh"></i>
+                    Try Again
+                </button>
+            </div>
+        `;
     }
 }
 
@@ -659,5 +723,139 @@ if (!document.querySelector('#dashboard-dynamic-styles')) {
     const style = document.createElement('style');
     style.id = 'dashboard-dynamic-styles';
     style.textContent = emptyStateStyles;
-    document.head.appendChild(style);
+    document.head.appendChild(style);}
+    // Performance monitoring
+function showPerformanceIndicator(loadTime) {
+    // Only show in development or if explicitly enabled
+    const showPerf = localStorage.getItem('showPerformance') === 'true' || window.location.hostname === 'localhost';
+    
+    if (!showPerf) return;
+    
+    let perfIndicator = document.getElementById('perf-indicator');
+    if (!perfIndicator) {
+        perfIndicator = document.createElement('div');
+        perfIndicator.id = 'perf-indicator';
+        perfIndicator.className = 'perf-indicator';
+        document.body.appendChild(perfIndicator);
+    }
+    
+    let status = 'fast';
+    let message = `⚡ ${loadTime.toFixed(1)}ms`;
+    
+    if (loadTime > 100) {
+        status = 'slow';
+        message = `⚠️ ${loadTime.toFixed(1)}ms`;
+    }
+    if (loadTime > 500) {
+        status = 'very-slow';
+        message = `🐌 ${loadTime.toFixed(1)}ms`;
+    }
+    
+    perfIndicator.className = `perf-indicator ${status} show`;
+    perfIndicator.textContent = message;
+    
+    // Hide after 3 seconds
+    setTimeout(() => {
+        perfIndicator.classList.remove('show');
+    }, 3000);
 }
+
+// Enhanced initDashboard with performance tracking
+function initDashboard() {
+    const initStart = performance.now();
+    
+    getTasks();
+    AOS.init();
+    
+    // Schedule daily notifications
+    if (typeof notificationManager !== 'undefined' && notificationManager) {
+        notificationManager.scheduleDailyNotifications();
+    }
+    
+    // Show welcome message for new users
+    showWelcomeMessage();
+    
+    const initTime = performance.now() - initStart;
+    console.log(`Dashboard initialized in ${initTime.toFixed(2)}ms`);
+    showPerformanceIndicator(initTime);
+}
+
+// Optimized renderTasks function with performance tracking
+function renderTasks(tasks) {
+    const renderStart = performance.now();
+    const taskList = document.getElementById('task-list');
+    if (!taskList) return;
+    
+    if (!tasks || tasks.length === 0) {
+        taskList.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <h3>No tasks yet</h3>
+                <p>Create your first task to get started with organizing your studies.</p>
+                <button class="btn btn-primary" onclick="openTaskModal()">
+                    <i class="fas fa-plus"></i>
+                    Add Your First Task
+                </button>
+            </div>
+        `;
+        return;
+    }
+    
+    // Use DocumentFragment for better performance with many tasks
+    const fragment = document.createDocumentFragment();
+    
+    tasks.forEach(task => {
+        const taskCard = document.createElement('div');
+        taskCard.className = `task-card ${task.completed ? 'completed' : ''}`;
+        taskCard.setAttribute('data-task-id', task.id);
+        
+        taskCard.innerHTML = `
+            <div class="task-header">
+                <div class="task-priority ${task.priority || 'medium'}"></div>
+                <div class="task-actions">
+                    <button class="task-action-btn" onclick="toggleTaskComplete('${task.id}')" title="${task.completed ? 'Mark as incomplete' : 'Mark as complete'}">
+                        <i class="fas ${task.completed ? 'fa-undo' : 'fa-check'}"></i>
+                    </button>
+                    <button class="task-action-btn" onclick="editTask('${task.id}')" title="Edit task">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="task-action-btn delete" onclick="deleteTask('${task.id}')" title="Delete task">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <h3 class="task-title">${escapeHtml(task.title || 'Untitled Task')}</h3>
+            ${task.description ? `<p class="task-description">${escapeHtml(task.description)}</p>` : ''}
+            <div class="task-meta">
+                <div class="task-due-date">
+                    <i class="fas fa-calendar"></i>
+                    <span>${task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'No due date'}</span>
+                </div>
+                <div class="task-category">${escapeHtml(task.category || 'General')}</div>
+            </div>
+        `;
+        
+        fragment.appendChild(taskCard);
+    });
+    
+    // Clear and append all at once for better performance
+    taskList.innerHTML = '';
+    taskList.appendChild(fragment);
+    
+    const renderTime = performance.now() - renderStart;
+    console.log(`Rendered ${tasks.length} tasks in ${renderTime.toFixed(2)}ms`);
+}
+
+// Helper function to escape HTML and prevent XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Enable performance monitoring (for development)
+// To enable: localStorage.setItem('showPerformance', 'true')
+// To disable: localStorage.removeItem('showPerformance')
+console.log('💡 Tip: Enable performance monitoring with: localStorage.setItem("showPerformance", "true")');
