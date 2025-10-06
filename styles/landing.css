@@ -1844,3 +1844,51 @@ svg defs {
 .progress-svg defs {
     display: block;
 }
+
+/* Button loading states */
+.btn-primary.loading,
+.btn-secondary.loading,
+.btn-ghost.loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.btn-primary.loading::after,
+.btn-secondary.loading::after,
+.btn-ghost.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: button-spin 1s linear infinite;
+}
+
+@keyframes button-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Success state */
+.btn-primary.success,
+.btn-secondary.success,
+.btn-ghost.success {
+    background: var(--success-500) !important;
+    border-color: var(--success-500) !important;
+    color: white !important;
+    transform: scale(1.02);
+    transition: all 0.3s ease;
+}
+
+/* Smooth transitions for button states */
+.btn-primary,
+.btn-secondary,
+.btn-ghost {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}

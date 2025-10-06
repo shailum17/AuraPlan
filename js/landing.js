@@ -1,4 +1,42 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Check if user is already logged in
+    const checkExistingAuth = () => {
+        // Check Firebase auth state
+        if (typeof firebase !== 'undefined' && typeof auth !== 'undefined') {
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    console.log('User already logged in via Firebase, redirecting to dashboard');
+                    // Don't redirect immediately, let user choose to stay on landing page
+                    updateButtonsForLoggedInUser();
+                }
+            });
+        }
+        
+        // Check localStorage guest session
+        const guestMode = localStorage.getItem('guestMode');
+        const guestUser = localStorage.getItem('guestUser');
+        
+        if (guestMode === 'true' && guestUser) {
+            console.log('Guest session found');
+            updateButtonsForLoggedInUser();
+        }
+    };
+    
+    // Update buttons for logged in users
+    const updateButtonsForLoggedInUser = () => {
+        const signinButtons = document.querySelectorAll('a[href="login.html"]');
+        signinButtons.forEach(button => {
+            const buttonText = button.textContent.trim().toLowerCase();
+            if (buttonText.includes('sign in')) {
+                button.innerHTML = '<i class="fas fa-tachometer-alt"></i> Go to Dashboard';
+                button.href = 'dashboard.html';
+            } else {
+                button.innerHTML = '<i class="fas fa-tachometer-alt"></i> Continue to Dashboard';
+                button.href = 'dashboard.html';
+            }
+        });
+    };
+    
     // Initialize AOS with modern settings
     AOS.init({
         duration: 600,
@@ -7,6 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
         easing: 'ease-out-cubic',
         delay: 0
     });
+    
+    // Check existing authentication
+    setTimeout(checkExistingAuth, 100);
 
     // Mobile Navigation
     const mobileToggle = document.querySelector('.mobile-menu-toggle');
@@ -326,5 +367,97 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Direct login functionality for signin and get started buttons
+    const handleDirectLogin = (e, buttonType) => {
+        e.preventDefault();
+        
+        const button = e.target.closest('a') || e.target;
+        const originalText = button.innerHTML;
+        
+        // Show loading state
+        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+        button.style.pointerEvents = 'none';
+        button.style.opacity = '0.8';
+        
+        // Function to restore button state
+        const restoreButton = () => {
+            button.innerHTML = originalText;
+            button.style.pointerEvents = '';
+            button.style.opacity = '';
+            button.style.background = '';
+        };
+        
+        // Function to show success and redirect
+        const showSuccessAndRedirect = () => {
+            button.innerHTML = '<i class="fas fa-check"></i> Success! Redirecting...';
+            button.style.background = '#10B981';
+            
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 800);
+        };
+        
+        // Function to create guest session fallback
+        const createGuestSession = () => {
+            const guestUser = {
+                uid: 'guest-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                displayName: 'Guest User',
+                email: null,
+                isAnonymous: true,
+                loginType: buttonType,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Store guest session
+            localStorage.setItem('guestMode', 'true');
+            localStorage.setItem('guestUser', JSON.stringify(guestUser));
+            localStorage.setItem('userPreferences', JSON.stringify({
+                theme: 'light',
+                notifications: true,
+                autoSave: true
+            }));
+            
+            showSuccessAndRedirect();
+        };
+        
+        // Try Firebase anonymous authentication first
+        if (typeof firebase !== 'undefined' && typeof auth !== 'undefined') {
+            console.log('Attempting Firebase anonymous authentication...');
+            
+            auth.signInAnonymously()
+                .then((userCredential) => {
+                    console.log('Firebase anonymous sign in successful:', userCredential);
+                    // Store additional info for trial users
+                    if (buttonType === 'trial') {
+                        localStorage.setItem('trialUser', 'true');
+                        localStorage.setItem('trialStartDate', new Date().toISOString());
+                    }
+                    showSuccessAndRedirect();
+                })
+                .catch((error) => {
+                    console.log('Firebase anonymous auth failed, using fallback:', error);
+                    // Fallback to localStorage guest session
+                    createGuestSession();
+                });
+        } else {
+            console.log('Firebase not available, using localStorage guest session');
+            // Fallback to localStorage guest session
+            createGuestSession();
+        }
+    };
+    
+    // Add event listeners to all signin and get started buttons
+    const signinButtons = document.querySelectorAll('a[href="login.html"]');
+    signinButtons.forEach(button => {
+        const buttonText = button.textContent.trim().toLowerCase();
+        let buttonType = 'signin';
+        
+        if (buttonText.includes('start') || buttonText.includes('trial') || buttonText.includes('get started')) {
+            buttonType = 'trial';
+        }
+        
+        button.addEventListener('click', (e) => handleDirectLogin(e, buttonType));
+    });
+    
     console.log('🚀 AuraPlan landing page loaded successfully!');
 });

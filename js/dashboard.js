@@ -31,11 +31,35 @@ document.addEventListener('DOMContentLoaded', () => {
             // Check for guest mode from localStorage
             const guestMode = localStorage.getItem('guestMode');
             const guestUser = localStorage.getItem('guestUser');
+            const trialUser = localStorage.getItem('trialUser');
             
             if (guestMode === 'true' && guestUser) {
                 // Use guest user data
                 currentUser = JSON.parse(guestUser);
-                userEmail.textContent = 'Guest User';
+                
+                // Set display name based on user type
+                if (trialUser === 'true') {
+                    userEmail.textContent = 'Trial User';
+                    // Add trial indicator
+                    const trialBadge = document.createElement('span');
+                    trialBadge.className = 'trial-badge';
+                    trialBadge.innerHTML = '<i class="fas fa-star"></i> Free Trial';
+                    trialBadge.style.cssText = `
+                        background: linear-gradient(135deg, #F59E0B, #D97706);
+                        color: white;
+                        padding: 2px 8px;
+                        border-radius: 12px;
+                        font-size: 0.75rem;
+                        margin-left: 8px;
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 4px;
+                    `;
+                    userEmail.appendChild(trialBadge);
+                } else {
+                    userEmail.textContent = 'Guest User';
+                }
+                
                 initDashboard();
             } else {
                 // Use local storage for offline mode
@@ -53,6 +77,109 @@ document.addEventListener('DOMContentLoaded', () => {
         // Schedule daily notifications
         if (notificationManager) {
             notificationManager.scheduleDailyNotifications();
+        }
+        
+        // Show welcome message for new users
+        showWelcomeMessage();
+    }
+    
+    function showWelcomeMessage() {
+        const isNewUser = !localStorage.getItem('hasVisitedDashboard');
+        const trialUser = localStorage.getItem('trialUser');
+        
+        if (isNewUser) {
+            localStorage.setItem('hasVisitedDashboard', 'true');
+            
+            // Create welcome notification
+            const welcomeMessage = document.createElement('div');
+            welcomeMessage.className = 'welcome-notification';
+            welcomeMessage.innerHTML = `
+                <div class="welcome-content">
+                    <div class="welcome-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="welcome-text">
+                        <h3>Welcome to AuraPlan! 🎉</h3>
+                        <p>${trialUser === 'true' ? 
+                            'Your free trial has started! Explore all features and create your first study plan.' : 
+                            'Welcome! Start by creating your first task or goal to get organized.'
+                        }</p>
+                    </div>
+                    <button class="welcome-close" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            welcomeMessage.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #4F46E5, #7C3AED);
+                color: white;
+                padding: 20px;
+                border-radius: 12px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+                max-width: 350px;
+                animation: slideInRight 0.5s ease-out;
+            `;
+            
+            // Add animation keyframes
+            if (!document.querySelector('#welcome-animations')) {
+                const style = document.createElement('style');
+                style.id = 'welcome-animations';
+                style.textContent = `
+                    @keyframes slideInRight {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    .welcome-content {
+                        display: flex;
+                        align-items: flex-start;
+                        gap: 15px;
+                    }
+                    .welcome-icon {
+                        font-size: 24px;
+                        margin-top: 5px;
+                    }
+                    .welcome-text h3 {
+                        margin: 0 0 8px 0;
+                        font-size: 18px;
+                    }
+                    .welcome-text p {
+                        margin: 0;
+                        font-size: 14px;
+                        opacity: 0.9;
+                        line-height: 1.4;
+                    }
+                    .welcome-close {
+                        background: none;
+                        border: none;
+                        color: white;
+                        cursor: pointer;
+                        padding: 5px;
+                        border-radius: 4px;
+                        opacity: 0.7;
+                        transition: opacity 0.2s;
+                    }
+                    .welcome-close:hover {
+                        opacity: 1;
+                        background: rgba(255, 255, 255, 0.1);
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.appendChild(welcomeMessage);
+            
+            // Auto-remove after 8 seconds
+            setTimeout(() => {
+                if (welcomeMessage.parentElement) {
+                    welcomeMessage.style.animation = 'slideInRight 0.5s ease-out reverse';
+                    setTimeout(() => welcomeMessage.remove(), 500);
+                }
+            }, 8000);
         }
     }
 
