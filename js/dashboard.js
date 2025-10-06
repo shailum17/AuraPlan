@@ -28,10 +28,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             initDashboard();
         } else {
-            // Use local storage for offline mode
-            currentUser = { uid: 'offline_user', isAnonymous: true };
-            userEmail.textContent = 'Offline Mode';
-            initDashboard();
+            // Check for guest mode from localStorage
+            const guestMode = localStorage.getItem('guestMode');
+            const guestUser = localStorage.getItem('guestUser');
+            
+            if (guestMode === 'true' && guestUser) {
+                // Use guest user data
+                currentUser = JSON.parse(guestUser);
+                userEmail.textContent = 'Guest User';
+                initDashboard();
+            } else {
+                // Use local storage for offline mode
+                currentUser = { uid: 'offline_user', isAnonymous: true };
+                userEmail.textContent = 'Offline Mode';
+                initDashboard();
+            }
         }
     });
 

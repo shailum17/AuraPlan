@@ -1,9 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Auth.js loaded');
+    console.log('Firebase available:', typeof firebase !== 'undefined');
+    console.log('Auth available:', typeof auth !== 'undefined');
+    
     // Check if user is already logged in
     auth.onAuthStateChanged(user => {
         if (user) {
+            console.log('User already logged in:', user);
             // User is already logged in, redirect to dashboard
             window.location.href = 'dashboard.html';
+        } else {
+            console.log('No user logged in');
         }
     });
 
@@ -127,21 +134,68 @@ function togglePassword(id) {
 }
 
 function signInAnonymously() {
+    console.log('signInAnonymously function called');
+    
+    // Check if Firebase is loaded
+    if (typeof firebase === 'undefined') {
+        console.error('Firebase is not loaded');
+        showMessage('Firebase is not loaded. Please refresh the page.', 'error');
+        return;
+    }
+    
+    // Check if auth is available
+    if (!auth) {
+        console.error('Firebase Auth is not initialized');
+        showMessage('Authentication service is not available. Please refresh the page.', 'error');
+        return;
+    }
+    
     const loadingOverlay = document.getElementById('loading-overlay');
-    loadingOverlay.style.display = 'flex';
+    if (loadingOverlay) {
+        loadingOverlay.style.display = 'flex';
+    }
 
+    console.log('Attempting anonymous sign in...');
+    
     auth.signInAnonymously()
-        .then(() => {
+        .then((userCredential) => {
+            console.log('Anonymous sign in successful:', userCredential);
             showMessage('Signed in as guest! Redirecting...', 'success');
             setTimeout(() => {
                 window.location.href = 'dashboard.html';
             }, 1000);
         })
         .catch((error) => {
-            showMessage(getErrorMessage(error.code), 'error');
+            console.error('Anonymous sign in error:', error);
+            let errorMessage = getErrorMessage(error.code);
+            
+            // Add specific error handling for anonymous auth
+            if (error.code === 'auth/operation-not-allowed') {
+                // If anonymous auth is not enabled, provide a fallback
+                console.log('Anonymous auth not enabled, using fallback guest mode');
+                showMessage('Entering guest mode...', 'success');
+                
+                // Set a flag in localStorage to indicate guest mode
+                localStorage.setItem('guestMode', 'true');
+                localStorage.setItem('guestUser', JSON.stringify({
+                    uid: 'guest-' + Date.now(),
+                    displayName: 'Guest User',
+                    email: null,
+                    isAnonymous: true
+                }));
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1000);
+                return;
+            }
+            
+            showMessage(errorMessage, 'error');
         })
         .finally(() => {
-            loadingOverlay.style.display = 'none';
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'none';
+            }
         });
 }
 
@@ -190,7 +244,11 @@ function getErrorMessage(errorCode) {
             return 'Please enter a valid email address.';
         case 'auth/too-many-requests':
             return 'Too many failed attempts. Please try again later.';
+        case 'auth/operation-not-allowed':
+            return 'This authentication method is not enabled. Please contact support.';
+        case 'auth/network-request-failed':
+            return 'Network error. Please check your internet connection and try again.';
         default:
-            return 'An error occurred. Please try again.';
+            return `An error occurred: ${errorCode}. Please try again.`;
     }
 }
